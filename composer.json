@@ -1,0 +1,6 @@
+{
+    "require": {
+        "erusev/parsedown": "^1.7",
+        "aws/aws-sdk-php": "~3.0"
+    }
+}

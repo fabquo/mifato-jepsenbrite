@@ -1,0 +1,67 @@
+.navbar {
+
+    position: fixed sticky;
+
+}
+
+.container{
+
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 400px;
+    form{
+        width: 50%;
+        margin-top: 50px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        input{
+            width: 60%;
+        }
+    }
+}
+
+.error{
+    color: orangered;
+}
+.good{
+    color: #83c5be;
+}
+
+
+
+
+.dropdown-item {
+    text-decoration: none;
+    float : right ; 
+    list-style-type: none;
+
+}
+
+.card {
+    display : grid ;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-auto-flow: row;
+    margin :auto;
+    padding: auto;
+
+    a {
+        text-decoration: none;
+        list-style-type: none;
+        color : black;
+    }
+}
+
+// .formedit{
+
+    
+//     margin :auto;
+//     padding : auto;
+//     text-align: center;
+// }
+
+
+

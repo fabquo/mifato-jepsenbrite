@@ -1,0 +1,43 @@
+/* body {
+  margin: 0;
+  font-size: 1.3rem;
+  min-height: 100vh;
+  background-image: url(../ressources/background.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: 'Roboto'; }
+
+.container {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 400px; }
+  .container form {
+    width: 50%;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column; }
+    .container form input {
+      width: 60%; }
+
+.error {
+  color: orangered; }
+
+.good {
+  color: #83c5be; }
+
+.dropdown-item {
+  text-decoration: none;
+  float: right;
+  list-style-type: none; }
+
+.login {
+  float: right; } */
+
+  .clamptext {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden; }
