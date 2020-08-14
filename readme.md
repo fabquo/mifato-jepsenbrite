@@ -15,7 +15,7 @@
 ## Challenge
 ---
 
-> The new version of your event manager in PHP, because We want it all ! [**https://github.githubassets.com/images/icons/emoji/unicode/2b50.png**]
+> The new version of your event manager in PHP, because We want it all ! [https://github.githubassets.com/images/icons/emoji/unicode/2b50.png]
 
 ---
 
