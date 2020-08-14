@@ -3,8 +3,10 @@ session_start();
 // VARIABLE POUR MESSAGE D ERREUR
 $error = null;
 $good = null;
-// pdo
+// PDO CONNEXION HERE
+use PHPMailer\PHPMailer\PHPMailer;
 
+require('../vendor/autoload.php');
 
 // SI LE BOUTON CREATEUSER EST CLIQUER
 if(isset($_POST['createUser'])){
@@ -22,11 +24,12 @@ if(isset($_POST['createUser'])){
             $verifUsername = $db->prepare("SELECT * FROM user WHERE username = ?");
             $verifUsername->execute(array($username));
             $usernameExist = $verifUsername->rowCount();
+            // echo 'userna = ' . $usernameExist;
             if($usernameExist === 0){
                 if($email === $email2){
                     if(filter_var($email,FILTER_VALIDATE_EMAIL)){
                         // VERIF SI EMAIL DEJA UTILISER
-                            $verifMail = $db->prepare("SELECT * FROM user WHERE mail = ?");
+                            $verifMail = $db->prepare("SELECT * FROM user WHERE email = ?");
                             $verifMail->execute(array($email));
                             $mailExist = $verifMail->rowCount();
                             if($mailExist === 0){
@@ -36,43 +39,59 @@ if(isset($_POST['createUser'])){
                                     $addDB->bindParam('email', $email);
                                     $addDB->bindParam('pwd', $pwd);
                                     $addDB->execute();
-                                    header("location: login.php");
+                                    //header("location: login.php");
                                     //SEND EMAIL ************************
-                                    // $from = new SendGrid\Email(null, "marino.michael.1990@gmail.com");
-                                    // $subject = "Hello ".$username."! Welcome to JepsenBrite !";
-                                    // $to = new SendGrid\Email(null, $email);
-                                    // $content = new SendGrid\Content("text/plain", "Hello, you're now offcialy a member of the JepsenBrite community!");
-                                    // $mail = new SendGrid\Mail($from, $subject, $to, $content);
+                                    
+                                    
+                                    $mail = new PHPMailer();
+                                    $mail->IsSMTP();
+                                    
+                                    $mail->SMTPDebug  = 0;  
+                                    $mail->SMTPAuth   = TRUE;
+                                    $mail->SMTPSecure = "ssl";
+                                    $mail->Port       = 465;
+                                    $mail->Host       = "smtp.gmail.com";
+                                    $mail->Username = "username@gmail.com";
+                                    $mail->Password = "password";
+                                    
+                                    $mail->IsHTML(true);
+                                    $mail->addAddress($email);
+                                    $mail->setFrom("jepsenbritemifato@gmail.com","Jepsen-Brite");
+                                    $mail->Subject = 'Inscription to Jepsen-Brite successfull';
+                                    $content = '<h1>Hi ' .$username .',</h1><br>
+                                    <p>Welcome to the Jepsen-brite website of the Mifato team !</p>
+                                    <p>Enjoy our project and don\'t forget to report the bugs !</p><br><br>
 
-                                    // $apiKey = getenv('SENDGRID_API_KEY');
-                                    // $sg = new \SendGrid($apiKey);
-
-                                    // $response = $sg->client->mail()->send()->post($mail);
-                                    // echo $response->statusCode();
-                                    // echo $response->headers();
-                                    // echo $response->body();
+                                    <p>Mifato team</p>';
+                                    
+                                    $mail->MsgHTML($content); 
+                                    if(!$mail->Send()) {
+                                      $error = "Error while sending Email. ";
+                                    } else {
+                                      $good = "Email sent successfully. ";
+                                    }
                                     // ********************************
-                                    $good = "account created";
+                                    $good = "Account created";
                                 }else{
-                                    $error = "Passwords doesn't match";
+                                    $error .= "Passwords doesn't match";
                                 }
                             }else{
-                                $error = "E-Mail already used";
+                                $error .= "E-Mail already used";
                             }
                     }else{
-                        $error = "Invalid E-Mail adress";
+                        $error .= "Invalid E-Mail adress";
                     }
                 }else{
-                    $error = "E-Mails doesn't match";
+                    $error .= "E-Mails doesn't match";
                 }
             }else{
-                $error =  "Username already used";
+                $error .=  "Username already used";
             }
         }else{
-            $error = "Tous les champs ne sont pas remplis ...";
+            $error .= "Tous les champs ne sont pas remplis ...";
         }
 }
-       
+       echo $error;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,7 +99,7 @@ if(isset($_POST['createUser'])){
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create an Account</title>
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link href="../assets/css/theme.css" rel="stylesheet" media="screen" title="main">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="../assets/css/style.css"> -->
@@ -88,33 +107,34 @@ if(isset($_POST['createUser'])){
 <body>
     <?php include('header.php')?>
     <div class="container mt-5">
-        <h2 class="text-warning">Create an account</h2>
+        <h2 class="text-primary">Create an account</h2>
         <div class="jumbotron">
 
         
             <form method="POST">
             <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username" id="username">
+                    <input type="text" class="form-control bg-white" name="username" id="username">
             </div>
             <div class="form-group">
-                <label for="email">E-Mail</label>
-                <input type="email" class="form-control" name="email" id="email">
+                <label for="email">E-Mail <small>(Don't forget to check your spam !)</small></label>
+                <input type="email" class="form-control bg-white" name="email" id="email">
             </div>
             <div class="form-group">
                 <label for="confirmEmail">Confirm E-Mail</label>
-                <input type="email" class="form-control" name="confirmEmail" id="confirmEmail">
+                <input type="email" class="form-control bg-white" name="confirmEmail" id="confirmEmail">
             </div>
             <div class="form-group">
                 <label for="pwd">Create a Password</label>
-                <input type="password" class="form-control" name="pwd" id="pwd">
+                <input type="password" class="form-control bg-white" name="pwd" id="pwd">
             </div>
             <div class="form-group">
                 <label for="confirmPWD">Confirm password</label>
-                <input type="password" class="form-control" name="confirmPWD" id="confirmPWD">
+                <input type="password" class="form-control bg-white" name="confirmPWD" id="confirmPWD">
             </div>    
-
-                <input type="submit" class="btn btn-warning" name="createUser" value="Create your account">
+            <div class="text-right">
+                <input type="submit" class="btn btn-primary" name="createUser" value="Create your account">
+            </div>
             </form>
         </div>
         <?php 

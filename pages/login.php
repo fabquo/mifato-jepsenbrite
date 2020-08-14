@@ -1,7 +1,7 @@
 <?php
 session_start();
 $error = null;
-// pdo
+// PDO CONNEXION HERE
 if(isset($_SESSION['id'])){
 
 }else{
@@ -42,7 +42,7 @@ if(isset($_SESSION['id'])){
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOG IN</title>
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link href="../assets/css/theme.css" rel="stylesheet" media="screen" title="main">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="../assets/css/style.css"> -->
@@ -59,19 +59,20 @@ if(isset($_SESSION['id'])){
         }else{
             ?>
             <div class="container mt-5">
-                <h2 class="text-info">Log into your account</h2>
+                <h2 class="text-primary">Log into your account</h2>
                 <div class="jumbotron">
                     <form method="POST">
                     <div class="form-group">
                         <label for="usernameLogin">Username</label>
-                        <input type="text" class="form-control" name="usernameLogin" placeholder="Your username">
+                        <input type="text" class="form-control bg-white" name="usernameLogin" placeholder="Your username">
                     </div>
                     <div class="form-group">
                         <label for="usernameLogin">Password</label>
-                        <input type="password" class="form-control" name="pwdLogin" placeholder="Your password">
+                        <input type="password" class="form-control bg-white" name="pwdLogin" placeholder="Your password">
                     </div>
-                    <input type="submit" class="btn btn-info" class="form-control" name="submitLogin" value="log in" id="loginSubmit">
-                        
+                    <div class="text-right">
+                    <input type="submit" class="btn btn-primary" class="form-control" name="submitLogin" value="log in" id="loginSubmit">
+                    </div>
                     </form>
             </div>
         <?php 

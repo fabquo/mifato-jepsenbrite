@@ -5,7 +5,8 @@ $error = null;
 $good = null;
 
 include '../vendor/erusev/parsedown/Parsedown.php';
-// pdo
+
+// PDO CONNEXION HERE
 
 function eventListCreator($db, $cat){
 
@@ -28,7 +29,7 @@ $eventRequest = $db->query("SELECT  event.*,
                                     ORDER BY date ASC");
 
 
-echo '<div class="container row text-center justify-content-around">';
+echo '<div class="container row text-center justify-content-around mx-auto">';
 while($listEvent = $eventRequest->fetch()){
 
         $commentrow = 0;
@@ -42,40 +43,63 @@ while($listEvent = $eventRequest->fetch()){
             $minToShow = $listEvent['15'];
         }
 
+        $imageCheck = explode('.', $listEvent['image']);
+        // var_dump($imageCheck);
+        $ext = end($imageCheck);
+        // echo $ext;
+
+        $isImage = $ext;
+
+        if($ext == 'jpeg' || $ext == 'jpg' || $ext == 'gif' || $ext == 'png'){
+            $isImage = 1;
+        }
+
     if($cat == 'all'){
         echo '<div class="card mb-5 ml-2 mr-2 pt-2 col-12 col-md-4 col-lg-3 col-xl-3" >';
-        echo '<div id="image" style="height: 100px;" class="mb-3">';
+        echo '<div id="image" style="height: 200px;" class="mb-3">';
         echo '<figure class="mt-5">';
-        if($listEvent['image']){
-            echo '<img src="https://mifato.s3.eu-west-3.amazonaws.com/' . $listEvent['image'] . '" class="card-img-top rounded" style="width: 75%; height: auto"/>';
-        }else{
-            echo '<img src="https://mifato.s3.eu-west-3.amazonaws.com/no-image.png" class="card-img-top rounded" style="width: 50%;"/>';
+        if($isImage){
+            if($isImage == 1){
+            echo '<img src="https://mifato.s3.eu-west-3.amazonaws.com/' . $listEvent['image'] . '" class="img-fluid" alt="event image not found" style="height:50%; width:50%"/>';
+            } else {
+                echo '<div class="embed-responsive embed-responsive-16by9 w-75 mx-auto">';
+                    echo '<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/' .$listEvent['image']. '" allowfullscreen></iframe>';
+                echo '</div>';
+            } 
+        } else {
+            echo '<img src="https://mifato.s3.eu-west-3.amazonaws.com/no-image.png" class="img-fluid" alt="event image not found" style="height:50%; width:50%"/>';
         }
             echo '</figure></div>';
             echo '<div class="card-body module mt-5">';
             echo '<h4 style="min-height: 100px"><a class="card-title" style="min-height: 80px" href="event.php?id='. $listEvent['0'] . '">' . $listEvent['1'] . '</a></h4>';
             echo '<p class="card-text"><small class"text-muted>' . $listEvent['13'] . ' '. $listEvent['12'] . ' ' . $listEvent['11'] . ' ' . $listEvent['10'] . '  -  ' . $listEvent['14'] . ':' . $minToShow . '</small></p>';
             echo '<p class="card-text"><small class"text-muted>' . $listEvent['title'] . ' | <i class="far fa-comments"></i> : '. $commentrow .'</small></p>';
-            echo '<p class="card-text overflow-hidden text-light line-coverage clamptext" style="height: 200px;">' . $listEvent['description'] .'</p>';
+            echo '<p class="card-text overflow-hidden line-coverage  text-justify text-truncate text-wrap " style="height: 200px;">' . $listEvent['description'] .'</p>';
             echo '</div>';
         echo '</div>';
 
     } elseif ($cat == $listEvent['category_id']){
 
         echo '<div class="card mb-5 ml-2 mr-2 pt-2 col-12 col-md-4 col-lg-3 col-xl-3 " style="width= 24rem">';
-        echo '<div id="image" style="height: 100px;" class="mb-3">';
+        echo '<div id="image" style="height: 200px;" class="mb-3">';
         echo '<figure class="mt-5">';
-        if($listEvent['image']){
-            echo '<img src="https://mifato.s3.eu-west-3.amazonaws.com/' . $listEvent['image'] . '" class="card-img-top rounded" style="width: 75%; height: auto"/>';
-        }else{
-            echo '<img src="https://mifato.s3.eu-west-3.amazonaws.com/no-image.png" class="card-img-top rounded" style="width: 50%;"/>';
+        if($isImage){
+            if($isImage == 1){
+            echo '<img src="https://mifato.s3.eu-west-3.amazonaws.com/' . $listEvent['image'] . '" class="img-fluid" style="height:50%; width:50%" alt="event image not found"/>';
+            } else {
+                echo '<div class="embed-responsive embed-responsive-16by9 w-75 mx-auto">';
+                    echo '<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/' .$listEvent['image']. '" allowfullscreen></iframe>';
+                echo '</div>';
+            } 
+        } else {
+            echo '<img src="https://mifato.s3.eu-west-3.amazonaws.com/no-image.png" class="img-fluid" alt="event image not found" style="height:50%; width:50%"/>';
         }
         echo '</figure></div>';
         echo '<div class="card-body module mt-5">';
         echo '<h4 style="min-height: 100px"><a class="card-title" style="min-height: 80px" href="event.php?id='. $listEvent['0'] . '">' . $listEvent['1'] . '</a></h4>';
         echo '<p class="card-text"><small class"text-muted>' . $listEvent['13'] . ' '. $listEvent['12'] . ' ' . $listEvent['11'] . ' ' . $listEvent['10'] . '  -  ' . $listEvent['14'] . ':' . $minToShow . '</small></p>';
         echo '<p class="card-text"><small class"text-muted>' . $listEvent['title'] . ' | <i class="far fa-comments"></i> : '. $commentrow .'</small></p>';
-        echo '<p class="card-text overflow-hidden text-light line-coverage clamptext" style="height: 200px;">' . $listEvent['description'] .'</p>';
+        echo '<p class="card-text overflow-hidden line-coverage  text-justify text-truncate text-wrap " style="height: 200px;">' . $listEvent['description'] .'</p>';
         echo '</div>';
     echo '</div>';
     }
@@ -90,7 +114,7 @@ while($listEvent = $eventRequest->fetch()){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content ="Display all event's coming for the Jepsen BeCode Promo and allow to create your own !">
     <title>Jepsen Brite</title>
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link href="../assets/css/theme.css" rel="stylesheet" media="screen" title="main">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
     <link rel="stylesheet" href="../assets/css/style.css">
@@ -102,30 +126,43 @@ while($listEvent = $eventRequest->fetch()){
 
     <?php include('header.php')?>
     <div class="container">
-    <form method ='get' action='#' name="eventlist">
-    <label for="category">Please select a category :</label>
+        <div class="row justify-content-center mt-5 mb-5">
+        <?php
+        if(!isset($_GET['category']) || $_GET['category'] == "all"){
+             echo '<a class="btn btn-light col-xl-2 col-6" href="category.php?category=all" name ="All">All</a>';
+        } else {
+            echo '<a class="btn btn-dark col-xl-2 col-6" href="category.php?category=all" name ="All">All</a>';
+        }?>
 
-
-            <select class="custom-select" name="category" id="category" onchange="eventlist.submit();">
-            <option> --> Pick a category here <-- </option>
-            <option value="all" name="all" id="all">All</option>
-            <?php
+            <?php 
                 $listRequest = $db->query("SELECT * FROM category ORDER BY title ASC");
-                
-                $listMenu = $listRequest;
+                $catid = null;
+                if(isset($_GET['category'])){
+                    $catid = $_GET['category'];
+                } 
 
+                $listMenu = $listRequest;
                 while($listMenu = $listRequest->fetch()){
 
-                    echo '<option value ="' . $listMenu['id'] . '" name ="' . $listMenu['title'] . '" id ="' . $listMenu['title'] . '">' . $listMenu['title'] . '</p>';
+                        if($catid == $listMenu['id']){
+                        echo '<a class="btn btn-light col-xl-2 col-6" href="category.php?category=' . $listMenu['id'] . '" name ="' . $listMenu['title'] . '" id ="' . $listMenu['title'] . '">' . $listMenu['title'] . '</a>';
+                    } else {
+                    
+                        echo '<a class="btn btn-dark col-xl-2 col-6" href="category.php?category=' . $listMenu['id'] . '" name ="' . $listMenu['title'] . '" id ="' . $listMenu['title'] . '">' . $listMenu['title'] . '</a>';
                 }
+                }
+                echo '</div>';
+                echo '</div>';
+
+                echo '</div>';
                 
             ?> 
-            </select>
+     </nav>       
     </form>
     <br/>
 
     <div class="container-fluid row text-center justify-content-between ml-n1">
-        <?php
+        <?php 
 
             if(isset($_GET['category'])){
                 $cat=$_GET['category'];

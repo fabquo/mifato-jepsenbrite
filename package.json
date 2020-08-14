@@ -12,5 +12,14 @@
     "node-sass": "^4.14.1",
     "sass": "^1.26.10"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@becode/eslint-config": "^0.10.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.6.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-unicorn": "^21.0.0",
+    "prettier": "^2.0.5"
+  }
 }

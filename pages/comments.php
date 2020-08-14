@@ -7,25 +7,26 @@
  MINUTE(date_comment)FROM comments AS c LEFT JOIN user AS u ON c.author_id = u.id WHERE event_id =  ? ORDER BY date_comment DESC");
  $comments->execute(array($_GET['id']));
 
-//   if(isset($_POST['sendComment'])){
-//       echo "bonjouuuur";
-//       $addComment = $db->prepare("INSERT INTO comments (text, date_comment, author_id, event_id) VALUES (:text ,NOW(), :author, :event)");
-//       $addComment->bindParam('text',$_POST['userComment']);
-//       $addComment->bindParam('author',$_SESSION['id']);
-//       $addComment->bindParam('event',$idevent);
-//       $addComment->execute();
-     
-//      }
-    
+if(isset($_SESSION['id'])){
+$displayUser = $db->query("SELECT * FROM user WHERE id = " .$_SESSION['id']);
+  $user= $displayUser->fetch();
+  //echo $user['username'];
+  $admin = false;
+
+  if($user['is_admin'] == 1){
+    $admin = true;
+  }
+}
+
 ?>
-<div class="comments">
-<h2 class="text-center">Event Comments</h2>
-     <div class="commentButton">
+<div class="comments w-100" id="comments">
+<h2 class="text-center mt-5">Comments</h2>
+     <div class="commentButton text-center">
          <?php 
          if(isset($_SESSION['id'])){
              ?>
                                  <!-- Button trigger modal -->
-                                 <button type="button" class="btn btn-success d-block mx-auto mt-3" data-toggle="modal" data-target="#exampleModal">
+                                 <button type="button" class="btn btn-success d-block mx-auto mt-3 mb-3" data-toggle="modal" data-target="#exampleModal">
                     Add a comment
                     </button>
 
@@ -59,13 +60,13 @@
              <?php
          }else{
              ?>
-             <div class="connectToComment d-flex justify-content-around d-block mx-auto" style="width: 500px;">
+             <div class="connectToComment justify-content-between mx-auto w-100 mt-3 mb-4">
                  <a href="login.php">
-                     <button class="btn btn-info">Log in to comment</button>
+                     <button class="btn btn-primary">Log in to comment</button>
                  </a>
                   
                   <a href="create_user.php">
-                     <button class="btn btn-info">Sign in to comment</button>
+                     <button class="btn btn-primary">Sign in to comment</button>
                  </a>
              </div>
              <?php
@@ -88,20 +89,20 @@
                     if(isset($showComments['email'])){
                     
                     ?>
-                    <div class="card border-success mt-3 w-100 mx-auto">
+                    <div class="card mt-3 w-75 mx-auto mb-5">
                         <div class="card-header d-flex justify-content-between">
-                            <a class="h4" href="<?php echo "profile.php?id=".$showComments['1'];?>">
+                            <a class="h4 my-auto text-decoration-none" href="<?php echo "profile.php?id=".$showComments['1'];?>">
                                 <img width="40" height="40" class="rounded-circle" src="<?php echo "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $showComments['email']) ) ). "&s=" . 10;?>" alt="">
                                 <?php echo $showComments['username'];?>
                             </a>
 
                                        <?php 
                                 if(isset($_SESSION['id'])){
-                                    if($_SESSION['id'] === $showComments['1']){
+                                    if($_SESSION['id'] === $showComments['1'] || $admin == true){
                                         ?>
-                                            <a href="<?php echo 'delete_comment.php?id='.$showComments['id'].'&idauthor='.$showComments['1'].'&eventid='.$idevent; ?>">
-                                                <button type="button" class="btn btn-danger" style="height: 35px;">
-                                                    X
+                                            <a class="my-auto" href="<?php echo 'delete_comment.php?id='.$showComments['id'].'&idauthor='.$showComments['1'].'&eventid='.$idevent; ?>">
+                                                <button type="button" class="btn btn-danger">
+                                                    Delete
                                                 </button>
                                         </a>
                                             
@@ -113,7 +114,7 @@
                                 }
                             ?></div>
                         <div class="card-body" style="overflow: auto;">
-                            <h3 class="card-title" style="overflow: auto;"><?php echo $showComments['text'];?></h3>
+                            <p style="overflow: auto;"><?php echo $Parsedown->text(htmlspecialchars_decode($showComments['text']));?></p>
                             <p class="card-text text-white-50"><?php echo $showComments['9'] . ' ' . $showComments['8'] . ' ' . $showComments['7'] . ' ' . $showComments['6'] . ' - ' . $showComments['10'] . ':' . $showComments['11'];?></p>
 
                             </div>
@@ -121,7 +122,7 @@
                     <?php
                     }else{
                         ?>
-                        <div class="card border-success mt-3 w-100 mx-auto" style="width: 60rem; height: 20rem; ">
+                        <div class="card mt-3 w-50 mx-auto mb-5" style="width: 60rem; height: 20rem; ">
                         <div class="card-header d-flex justify-content-between">
                             <h4 class="h4">
                                 <img width="40" height="40" class="rounded-circle" src="<?php echo "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $showComments['email']) ) ). "&s=" . 10;?>" alt="">
@@ -130,7 +131,7 @@
 
                         </div>
                         <div class="card-body" style="overflow: auto;">
-                            <h3 class="card-title" style="overflow: auto;"><?php echo $showComments['text'];?></h3>
+                            <p class="" style="overflow: auto;"><?php $Parsedown->text($showComments['text']);?></p>
                             <p class="card-text text-white-50"><?php echo $showComments['9'] . ' ' . $showComments['8'] . ' ' . $showComments['7'] . ' ' . $showComments['6'] . ' - ' . $showComments['10'] . ':' . $showComments['11'];?></p>
 
                         </div>
