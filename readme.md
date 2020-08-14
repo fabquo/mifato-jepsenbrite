@@ -15,7 +15,7 @@
 ## Challenge
 ---
 
-> The new version of your event manager in PHP, because We want it all ! **https://github.githubassets.com/images/icons/emoji/unicode/2b50.png**
+> The new version of your event manager in PHP, because We want it all ! ![](https://github.githubassets.com/images/icons/emoji/unicode/2b50.png)
 
 ---
 
@@ -113,4 +113,4 @@ The previous version is already online. Update it (you don't need to create a ne
 Encouragement
 Have good times !
 
-[**https://camo.githubusercontent.com/8f277160f8092d508e8abc78e8ed1d2243cbc365/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f563447694730565344333178432f67697068792e676966**]
+![](https://camo.githubusercontent.com/8f277160f8092d508e8abc78e8ed1d2243cbc365/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f563447694730565344333178432f67697068792e676966)
