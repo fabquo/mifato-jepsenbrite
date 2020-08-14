@@ -1,4 +1,4 @@
-# Jepsen Brite
+# Jepsen Brite 2.0
 
 
 
@@ -10,114 +10,107 @@
 
 - `Fabian Quoibach` | [**Fabian's GitHub**](https://github.com/fabquo) |
 - `Antonio Maita` | [**Tonio's GitHub**](https://github.com/AntonioMaita) |
-- `Michael Marino` | [**Michael's GitHub**](https://github.com/MmarinoM) |
+- `Said El Mohor` | [**Said's GitHub**](https://github.com/said956) |
 
 ## Challenge
 ---
 
-> An event manager in PHP, because The show must go on ! :dancers:
+> The new version of your event manager in PHP, because We want it all ! https://github.githubassets.com/images/icons/emoji/unicode/2b50.png
 
 ---
 
 | Challenge Parameters | Challenge Details                                                                                                  |
 | :------------------- | :----------------------------------------------------------------------------------------------------------------- |
 | Repository           | `jepsen-brite`                                                                                                     |
-| Challenge type       | `learning challenge`                                                                                               |
+| Challenge type       | `consolidation challenge`                                                                                               |
 | Duration             | `2 weeks`                                                                                                          |
-| Deadline             | `31/07/2020 17h00`                                                                                                 |
+| Deadline             | `14/08/2020 17h00`                                                                                                 |
 | Deployment method    | `Heroku`                                                                                                           |
 | Group composition    | `Trio`                                                                                                             |
 | Project submition    | [Google form](https://docs.google.com/forms/d/e/1FAIpQLSdmQOR8kTzT5nJfekyvcMl98AXfZ9BYQXxD38wb341Rwwql2w/viewform) |
 
 ## Learning Objectives
 
-- Generate templates with PHP
-- Be able to use the superglobals $_GET, $\_POST, $_COOKIE and $\_SESSION variable.
-- Implement a CRUD
-- Create a DB following the client requests
-- Be able to manage SQL requests
-- Use PDO
-- Deploy on Heroku
+- Dealing with an change in your team -> requires skills : solution oriented, team player, team manager.
+- Re-organised the code and the DB. Remember : "To do and undo, it's always part of the job"
+- Going deeper in PHP and SQL
 
 ## The Mission
 
-A client from the cultural sector, Henry Fiesta, ask you to provide him a new website. The purpose of this website is to show all kinds of events to the public according to their point of interest.
+Henry Fiesta, the client of the project Jepsen Brite is very enthusiast after the presentation of your job, and now he would like to add new features to his website to be in better position on the market.
 
-The website will be visible to any visitor who have to register to be able to interact (like registering for an event, putting in a comment, etc.).
+Unfortunaletely, a member of your team was contacted by a headhunter and he decided to leave your team for an another one !
 
-You can compare this project to [**Eventbrite**](https://www.eventbrite.com/), except that Henry thinks you will make a better product. So, don't disapoint him. He has already paid a deposit.
+But don't worry ! Your boss has already engaged a new colleague who will integrate your team. Explain him your work on the project and how your code works.
 
-Henry doesn't have special request for the design, you're free to follow your own inspiration.
-_But don't be too focus on the design_, the aim of this project is to deliver something functional. You can take a template already made by _Bootstrap_ or _Materialize_.
+### Finish the previous job
 
-### Users
+The project may not contain all the features of the basic application.
 
-Any visitor can consult the website and navigate through the event, but to interact, he must be connected as a _User_.
+You must finalize these functionalities which are essential to achieve the new functionalities.
 
-- Any visitor should be able to sign up and log in.
-- There is no admin user, everybody has got the same rights.
-- When a user sign up (**CREATE**), he must receive an email.
-- A user must have an unique : - _email adress_ which is private, so don't show it to the others users. - _password_ - _nickname_ which will be displayed on the website. - _avatar_ (use [Gravatar](https://en.gravatar.com/)) which will be displayed on the website.
-- A user logged can create an event.
+Also, if you have some bugs, you have to correct them.
 
-### Profile page
+You will have to do everything in your power to ensure that all the new features can be implemented and work perfectly.
 
-- It displays the user informations (**READ**).
-- Users will be able to modify (**UPDATE**) their information (except email) on this page.
-- He should be able to **DELETE** his account via this page.
+### New features
 
-### Homepage
 
-- The homepage presents (**READ**) a list of upcoming events, in chronological order (the next to occur is the first presented, then the next, etc.). Each event must be displayed with his name, date and hour.
-- At least, the 5 upcoming events should be displayed, Max 21 upcoming events.
-- On each event a link must allow to go to the page of the event.
-- The first event to occur has to be highlighted.
 
-### Event page
+1.  Possibility to register to an event Homepage
 
-An event should contain at least :
+It makes sense, the users should have the possibility to participate to an event. Add a button where a user can show he will participate to the event.
 
-- A title
-- The author
-- A date and an hour
-- An image
-- A description. It must be _rich_: it must interprets **markdown** and shows **emojis**.
-- A category (for example : concert, exhibition, conference...)
+Also, a list of participants should be displayed on the Page Event.
 
-All these informations must be displayed on the event page.
+2. Subcategories
 
-The author of an event, and only him, can **UPDATE** his own event. The update can be made as well on the same page as redirect to an other page (you're free to choose the best process).
+You have categories, this is nice, but Henry would like to go more deeply. He would like to implement subcategories.
 
-The author of an event, and only him, can **DELETE** his own event.
+For example, for the category concert, you should tell which kind of music it is : classic, pop, reggaeton, metal...
 
-- There must be a link to the event creation page.
-- Any user can post a comment on the event. It must interprets **markdown** and shows **emojis**.
+An event can have several subcategories. For example, if Amon Amarth plays an acoustic concert, your user should see : acoustic and metal for this event.
 
-### Event creation page
+Create at least 2 events with 2 subcategories.
 
-This is here a user can **CREATE** an event.
+3.  User private dashboard
 
-### Past Events page
+Create a dashboard for the user, so he could manage his events.
 
-It displays the past events. It can looks like the homepage.
+The dashboard should at least shows :
+- a list of events he will participate
+- a list of events he participated
+- a list of events he created 
+ 
+ 4. Add administrator account
 
-### Category page
+ Henry would like to keep the control of his website. So, he would like an admin account which gives him the possibility to delete :
 
-As there is not administrator for this application, you can create categories in advanced in the DB and constrains the users to use some categories (for example : concert, exhibition, conference...).
+- fake events
+- users
+- comments
 
-The category page displays events in regards to category. It can looks like the homepage.
+His account must have the same rights as a user (create and update events, comments).
 
-### The menu
+5. A video or an image
 
-- The menu should link to all the important pages.
-- There must be a link to the profile page.
-- Don't forget to add a submenu for the categories. It could be display as a sidebar for example.
+When a user create an event, he should have the choice to display an image or a video url (like YouTube, Vimeo..) to illustrate his event.
 
-## Constraints
+6. Adress and Map
+An event must have an adress. On the Event page, the localisation should be displayed on a map.
 
-- Use SCRUM methodology to communicate and advance in team. Your SCRUM meeting should be a ritual everyday. The 3 steps of a SCRUM meeting : - Tell what was done. - Tell what difficulties you encountered. - Define objectives.
-- The back-end must be programmed in **PHP**, and there is no constraint about the way you code.
-- The database must be in SQL.
-- The project should be published on [**Heroku**](https://heroku.com). You have free credits to use on Heroku with your **GitHub Student Pack**.
-- You must hash your password with a solution like _bcrypt_.
-- No credential must be commited on the repo Github.
+You can use for example Google Maps or OpenStreetMap.
+
+### Bonus
+
+ - If an event is modified, all the users registered should be informed either by a message, by a notification or by an email (or the all together).
+ - Send a message, notification or email one day before an event occur to the users registered.
+
+### Deployement
+
+The previous version is already online. Update it (you don't need to create a new one).
+
+Encouragement
+Have good times !
+
+https://camo.githubusercontent.com/8f277160f8092d508e8abc78e8ed1d2243cbc365/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f563447694730565344333178432f67697068792e676966
