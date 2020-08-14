@@ -434,7 +434,7 @@ $sessionID = $_SESSION['id'];
 								echo '<img src="https://mifato.s3.eu-west-3.amazonaws.com/no-image.png" class="img-fluid w-50" alt="event image not found"/>';
 							}?>
 						<div id="map-container-google-1" class="z-depth-1-half map-container w-100 justify-content-center mt-5">
-									<iframe class="w-100" src="https://google.com/maps/embed/v1/search?key=AIzaSyDQY1mogFyuZcKupxOaoocq-_s2uaN_vBo&q=<?php echo $event['8'] .'+' .$event['9']. '+' . $event['10'] . '+' . $event['11'];?>" frameborder="0" style="border:0" height="400px" allowfullscreen></iframe>
+									<iframe class="w-100" src="https://google.com/maps/embed/v1/search?key=APIGOOGLEKEY&q=<?php echo $event['8'] .'+' .$event['9']. '+' . $event['10'] . '+' . $event['11'];?>" frameborder="0" style="border:0" height="400px" allowfullscreen></iframe>
 						</div>
 						<div class="text-center mt-3" height="50px">
 						<?php
